@@ -26,6 +26,8 @@ export default function FormPropsTextFields(reg) {
         if (e.target.value.length > 2) {
             registration(e.target.value);
             actionNameOne({nameOne: e.target.value, reg});
+        } else {
+           actionNameOne('DELETE'); 
         }
     }
 
