@@ -1,16 +1,30 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 
-export async function POST (request) {
-    const { reg } = await request.json();
-    console.log(' TEST - ', reg);
+export async function GET(request) {
+    console.log('TEST API REG')
+    const secretjwt = process.env.JWT_SECRET;
+    const cookieStore = await cookies();
+    let token = cookieStore.get("auth_token")?.value;
 
-    const token = jwt.sign(
-        { reg: "id00001" },
-        "secret1010",
-        { expiresIn: '1d'}
-    );
+    if (token) {
+        try {
+            let decoded = jwt.verify(token, secretjwt);
+        } catch (error) {
+            console.error(error);
+        }
+    } else {
+        const id_reg = `id_regestration_${new Date().getTime()}`;
+        token = jwt.sign(
+            { reg: id_reg },
+            secretjwt,
+            { expiresIn: '1d' }
+        );
+    }
+
+
 
     const cookiesSet = await cookies();
     cookiesSet.set('auth_token', token, {
@@ -21,5 +35,6 @@ export async function POST (request) {
         path: '/', // Доступно для всього сайту
     });
 
-    return NextResponse.json({ success: true, message: "Вхід успішний" });
+    return NextResponse.json({ success: true });
+
 }

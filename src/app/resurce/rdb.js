@@ -1,4 +1,13 @@
-export default async function temporareStor() {
+import { createClient } from "redis";
+import "dotenv/config";
+
+export async function redisInit() {
+
+    const clientRedis = await createClient({
+        url: process.env.REDIS_URL
+    }).on('error', (err) => console.error('Redis Client Error', err));
+    
+    
     const workr = {
         tokens: {
             token: { // це приклад для редагування
@@ -14,5 +23,15 @@ export default async function temporareStor() {
             _name: 'name_name'//імʼя для читання
         }
     }
+
+    return clientRedis;
 }
+
+
+
+export async function showAll () {
+    const client = await redisInit();
+return await client.hGetAll('tokens');
+}
+
 

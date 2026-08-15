@@ -1,49 +1,46 @@
 'use client';
 
 import { Box, TextField } from "@mui/material"
-import { actionNameOne } from "../services/actions"
+import { actionWrite } from "../services/actions"
+import { search } from "../services/search";
+import tempFild from "../resurce/tempFild";
 
-export default function FormPropsTextFields(reg) {
+export default function FormPropsTextFields() {
 
-    const registration = async (nameONE) => {  
-        if (!reg.regToken) {
-            const id_reg = `id_${nameONE}_${new Date().getTime()}`;
-            try {
-                const response = await fetch("/api/reg", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "aplication/json",
-                    },
-                    body: JSON.stringify({ reg: id_reg }),
-                });
-            } catch (error) {
-                console.error(error);
-            }
-        } else return;
-    }
-
-    function handleNameOne(e) {
+    async function handleNameOne(e) {
         if (e.target.value.length > 2) {
-            registration(e.target.value);
-            actionNameOne({nameOne: e.target.value, reg});
+            tempFild.fild['nameOne'] = e.target.value
+            await actionWrite(tempFild.fild);
         } else {
-           actionNameOne('DELETE'); 
+            delete tempFild.fild.nameOne;
+            await actionWrite(tempFild.fild);
         }
     }
 
-    function handNameTwo(e) {
-        if (e.target.value.length > 2)
-        actionNameOne({nameTwo: e.target.value, reg});
+    async function handNameTwo(e) {
+        if (e.target.value.length > 2) {
+            tempFild.fild['nameTwo'] = e.target.value
+            actionWrite(tempFild.fild);
+        } else {
+            delete tempFild.fild.nameTwo;
+            await actionWrite(tempFild.fild);
+        }
     }
 
-    function handlePName(e) {
-        if (e.target.value.length > 7)
-            actionNameOne({nameP: e.target.value, reg});
+    async function handlePName(e) {
+        if (e.target.value.length > 2) {
+            tempFild.fild['nameP'] = e.target.value
+            actionWrite(tempFild.fild);
+        } else {
+            delete tempFild.fild.nameP;
+            await actionWrite(tempFild.fild);
+        }
     }
 
-    function handleSearch(e) {
-        if (e.target.value.length > 2)
-            actionNameOne({search: e.target.value, reg});
+    async function handleSearch(e) {
+        if (e.target.value.length > 2) {
+            await search({ search: e.target.value });
+        }
     }
 
     return (
