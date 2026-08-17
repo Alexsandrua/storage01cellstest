@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config"
 
 export async function POST(Request) {
-console.log('TEST API REG')
+
     const secretjwt = process.env.JWT_SECRET;
 
     try {

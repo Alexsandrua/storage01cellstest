@@ -5,7 +5,7 @@ import { actionWrite } from "../services/actions"
 import { search } from "../services/search";
 import tempFild from "../resurce/tempFild";
 
-export default function FormPropsTextFields() {
+export default function DashboardImput() {
 
     async function handleNameOne(e) {
         if (e.target.value.length > 2) {

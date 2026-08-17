@@ -1,13 +1,11 @@
 'use client'
 import Image from "next/image";
 import { useEffect } from "react";
-import Boxinput from "./components/boxinput";
+import Boxinput from "./components/nameInput";
 import ButtOpenCreate from "./components/buttonoc";
 
 
 export default function Home() {
-  console.log('HOME HOME HOME')
-
   useEffect(() => {
     const initRegSesion = async () => {
       try {
