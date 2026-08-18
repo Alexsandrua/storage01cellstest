@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 export async function GET(request) {
-    console.log('TEST API REG')
+    
     const secretjwt = process.env.JWT_SECRET;
     const cookieStore = await cookies();
     let token = cookieStore.get("auth_token")?.value;

@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image";
 import { useEffect } from "react";
-import Boxinput from "./components/nameInput";
+import DashboardImput from "./components/dashboardImput";
 import ButtOpenCreate from "./components/buttonoc";
 
 
@@ -33,7 +33,7 @@ export default function Home() {
             height={100}
             priority
           />
-          <Boxinput />
+          <DashboardImput />
           <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
             Віртуальна комірка з повідомленням може зберігатию без пароля {" "}
             <a

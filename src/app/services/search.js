@@ -1,7 +1,4 @@
 "use server"
-import dataload from '../resurce/db';
-
-import { cookies } from 'next/headers';
 
 export async function search(data) {
   let name = data.search
