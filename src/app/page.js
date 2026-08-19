@@ -2,8 +2,6 @@
 import Image from "next/image";
 import { useEffect } from "react";
 import DashboardImput from "./components/dashboardImput";
-import ButtOpenCreate from "./components/buttonoc";
-
 
 export default function Home() {
   useEffect(() => {
@@ -49,7 +47,6 @@ export default function Home() {
             </a>{" "}
             потім воно буде автоматично виделено.
           </p>
-          <ButtOpenCreate />
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
 
