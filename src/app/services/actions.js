@@ -3,13 +3,16 @@ import "dotenv/config"
 
 
 export async function actionWrite(data) {
-
+  if(data.match.length < 3) return null
   let name = data.match
     .toLowerCase()
     .trim();
-    
-    if(data.label == 'secondName') name = `_${name}`;
 
+  if (data.typName == 'secondName') name = `_${name}`;
+  if (data.typName == 'secondName' && data.form.oneName ) console.log(' DABLE ', `${data.form.oneName}_${name}`);
+
+
+  console.log(' FORM ', data.form)
 
   try {
     const params = new URLSearchParams({ search: name }).toString();
@@ -20,19 +23,15 @@ export async function actionWrite(data) {
       },
     });
 
-    // Перевіряємо, чи успішний статус відповіді (200-299)
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     let result = ''
     if (response.status === 200) {
-      result = await response.json(); // Отримуємо відповідь від бекенду
+      result = await response.json();
     } else if (response.status === 204) result = null;
-console.log(result)
     return result;
-
   } catch (error) {
     console.error('Помилка запиту:', error);
   }
-
 }

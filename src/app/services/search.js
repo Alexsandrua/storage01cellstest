@@ -1,6 +1,7 @@
 "use server"
 
 export async function search(data) {
+  if (data.search.length < 3) return null
   let name = data.search
     .toLowerCase()
     .trim();
@@ -10,17 +11,17 @@ export async function search(data) {
     const response = await fetch(`${process.env.DB_SERVER}/searchname?${params}`, {
       method: 'GET', // Вказуємо метод
       headers: {
-        'Accept': 'application/json', // Обов'язково для JSON
+        'Accept': 'application/json',
       },
     });
 
-    // Перевіряємо, чи успішний статус відповіді (200-299)
+
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     let result = ''
     if (response.status === 200) {
-      result = await response.json(); // Отримуємо відповідь від бекенду
+      result = await response.json();
     } else if (response.status === 204) result = null;
 
     return result;

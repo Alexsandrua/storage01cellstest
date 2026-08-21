@@ -5,6 +5,8 @@ import { Box, TextField, Button, IconButton, InputAdornment, Stack } from "@mui/
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { actionWrite } from "../services/actions"
 import { search } from "../services/search";
+import { actionCreate } from '../services/create';
+import PopupWithTextarea from './popupdialog'
 
 export default function DashboardImput() {
 
@@ -16,17 +18,29 @@ export default function DashboardImput() {
     const [create, setCreate] = useState(true);
     const [isNameExists, setIsNameExists] = useState(false);
     const [error, setError] = useState('');
+    const [isPopupOpen, setIsPopupOpen] = React.useState(false);
 
     async function handleNameOne(e) {
         setOpen(false);
         setForm({ ...form, [e.target.name]: e.target.value });
-        await actionWrite({ match: e.target.value, label: e.target.name });
+        const res = await actionWrite({
+            match: e.target.value,
+            typName: e.target.name,
+            form,
+        });
+        //setIsNameExists(res);
     }
 
     async function handNameSecond(e) {
         setCreate(false)
         setForm({ ...form, [e.target.name]: e.target.value });
-        actionWrite({ match: e.target.value, label: e.target.name });
+        const res = await actionWrite({
+            match: e.target.value,
+            typName: e.target.name,
+            form,
+        });
+        console.log(res)
+        // setIsNameExists(res);
     }
 
     async function handlePName(e) {
@@ -35,16 +49,17 @@ export default function DashboardImput() {
     }
 
     async function handleSearch(e) {
-        if (e.target.value.length > 2) {
-            await search({ search: e.target.value });
-        }
+        await search({ search: e.target.value });
     }
 
     const handleSubmit = (e) => {
-        setIsNameExists(true);
+        setIsPopupOpen(true);
         e.preventDefault();
+        actionCreate(form);
         console.log('Зібрані дані:', form);
     };
+
+    const handleClose = () => setIsPopupOpen(false);
 
     return (
 
@@ -134,7 +149,7 @@ export default function DashboardImput() {
                     Відкрити
                 </Button>
             </Stack>
-
+            < PopupWithTextarea open={isPopupOpen} onClose={handleClose} />
         </Box >
 
     );
