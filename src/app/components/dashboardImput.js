@@ -13,34 +13,48 @@ export default function DashboardImput() {
     const [form, setForm] = useState({ oneName: '', secondName: '', password: '' });
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+
     const handleClickShowPassword = () => setShowPassword(!showPassword);
+
     const [open, setOpen] = useState(true);
     const [create, setCreate] = useState(true);
-    const [isNameExists, setIsNameExists] = useState(false);
+
+    const [isNameOneExists, setIsNameOneExists] = useState(false);
+    const [isNameSecondExists, setIsNameSecondExists] = useState(false);
+
     const [error, setError] = useState('');
+
     const [isPopupOpen, setIsPopupOpen] = React.useState(false);
 
     async function handleNameOne(e) {
-        setOpen(false);
         setForm({ ...form, [e.target.name]: e.target.value });
         const res = await actionWrite({
             match: e.target.value,
             typName: e.target.name,
             form,
         });
-        //setIsNameExists(res);
+
+        if (res.lengthLine) {
+            setCreate(res.create);
+            setOpen(res.open);
+            setIsNameOneExists(res.open);
+        }
+
     }
 
     async function handNameSecond(e) {
-        setCreate(false)
         setForm({ ...form, [e.target.name]: e.target.value });
         const res = await actionWrite({
             match: e.target.value,
             typName: e.target.name,
             form,
         });
-        console.log(res)
-        // setIsNameExists(res);
+        if (res.lengthLine) {
+            setCreate(res.create);
+            setOpen(res.open);
+            setIsNameOneExists(res.open);
+        }
+
     }
 
     async function handlePName(e) {
@@ -52,11 +66,10 @@ export default function DashboardImput() {
         await search({ search: e.target.value });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         setIsPopupOpen(true);
         e.preventDefault();
-        actionCreate(form);
-        console.log('Зібрані дані:', form);
+        await actionCreate(form);
     };
 
     const handleClose = () => setIsPopupOpen(false);
@@ -77,18 +90,20 @@ export default function DashboardImput() {
                     required
                     id="outlined-required"
                     label="Ім'я комірки"
+                    onChange={handleNameOne}
                     name="oneName"
                     value={form.oneName}
-                    error={isNameExists}
-                    helperText={isNameExists ? "Цей іʼмя вже існує" : ""}
-                    onChange={handleNameOne}
+                    error={isNameOneExists}
+                    helperText={isNameOneExists ? "Цей іʼмя вже існує" : ""}
                 />
                 <TextField
                     id="outlined-required"
                     label="Друге ім'я комірки"
+                    onChange={handNameSecond}
                     name="secondName"
                     value={form.secondName}
-                    onChange={handNameSecond}
+                    error={isNameSecondExists}
+                    helperText={isNameSecondExists ? "Цей іʼмя вже існує" : ""}
                 />
             </div>
             <div>

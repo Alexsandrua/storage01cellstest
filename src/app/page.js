@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Image from "next/image";
 import { useEffect } from "react";
 import DashboardImput from "./components/dashboardImput";
@@ -49,12 +49,7 @@ export default function Home() {
           </p>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-
-
         </div>
-
-
-
       </main>
     </div>
   );

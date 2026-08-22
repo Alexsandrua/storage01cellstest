@@ -1,15 +1,16 @@
 'use client';
 
-import * as React from 'react';
+import { Fragment, useState } from "react";
+//import  React { useState, Fragment} from 'react';
 import { DialogTitle, Button, Dialog, DialogActions, DialogContent, TextareaAutosize } from "@mui/material"
 
 // Ваш компонент текстового поля (трохи адаптований за стилями)
-function MinHeightTextarea() {
+function LeterPopup({ ...props }) {
     return (
         <TextareaAutosize
             aria-label="minimum height"
             minRows={3}
-            placeholder="Введіть ваш текст тут..."
+            placeholder="Введіть текст вашиго повідомлення..."
             style={{
                 width: '100%',
                 height: '100%',        // Щоб розтягувався на всю ширину вікна
@@ -17,8 +18,9 @@ function MinHeightTextarea() {
                 padding: '10px',
                 borderRadius: '4px',
                 borderColor: '#ccc',
-                fontFamily: 'Roboto, sans-serif'
+                fontFamily: 'Roboto, sans-serif',
             }}
+            {...props}
         />
     );
 }
@@ -26,9 +28,12 @@ function MinHeightTextarea() {
 // Головний компонент з Popup вікном
 export default function PopupWithTextarea({ open, onClose }) {
 
+    const [form, setForm] = useState({ leter: '' });
+
     // Функції для відкриття та закриття
     const saveKomirka = () => {
-         onClose();
+        onClose();
+        console.log('FROM ', form)
     };
 
     const handleClose = () => {
@@ -36,10 +41,11 @@ export default function PopupWithTextarea({ open, onClose }) {
     };
 
     return (
-        <React.Fragment>
+        <Fragment>
             <Dialog
                 open={open}
                 onClose={onClose}
+                component="form"
                 fullWidth={true}      // Дозволяє вікну адаптуватися під розмір
                 maxWidth="sm"         // Встановлює максимальну ширину (small)
                 aria-labelledby="dialog-title"
@@ -50,7 +56,11 @@ export default function PopupWithTextarea({ open, onClose }) {
 
                 <DialogContent dividers>
                     {/* Вставляємо ваш компонент сюди */}
-                    <MinHeightTextarea />
+                    <LeterPopup
+                        name="leter"
+                        value={form.leter}
+                        onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })}
+                    />
                 </DialogContent>
 
                 <DialogActions>
@@ -62,6 +72,6 @@ export default function PopupWithTextarea({ open, onClose }) {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </React.Fragment>
+        </Fragment>
     );
 }

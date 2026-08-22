@@ -3,7 +3,6 @@ import App from "./components/app";
 import "./globals.css";
 
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
