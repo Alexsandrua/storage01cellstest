@@ -33,11 +33,11 @@ export default function DashboardImput() {
             typName: e.target.name,
             form,
         });
-
+console.log(' RES 0 ', res.answer)
         if (res.lengthLine) {
             setCreate(res.create);
             setOpen(res.open);
-            setIsNameOneExists(res.open);
+            setIsNameOneExists(!res.open);
         }
 
     }
@@ -49,10 +49,11 @@ export default function DashboardImput() {
             typName: e.target.name,
             form,
         });
+        console.log(' RES 1 ', res)
         if (res.lengthLine) {
             setCreate(res.create);
             setOpen(res.open);
-            setIsNameOneExists(res.open);
+            setIsNameSecondExists(!res.open);
         }
 
     }
@@ -150,7 +151,7 @@ export default function DashboardImput() {
                     color="success"
                     type="submit"
                     variant="contained"
-                    disabled={open}
+                    disabled={create}
                 >
                     Створити
                 </Button>
@@ -159,7 +160,7 @@ export default function DashboardImput() {
                     color="success"
                     type="submit"
                     variant="contained"
-                    disabled={create}
+                    disabled={open}
                 >
                     Відкрити
                 </Button>
