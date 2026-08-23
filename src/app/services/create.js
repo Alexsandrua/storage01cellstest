@@ -8,43 +8,33 @@ export async function actionCreate(data) {
 
     const cookieStore = await cookies();
     const token = cookieStore.get('auth_token')?.value;
-    
 
-    const nameOne = data.oneName.length  > 2 ? data.oneName : null;
-    const nameSecond = data.secondName.length  > 2 ? data.secondName : null;
+    if (token) {
 
-    console.log(' CREATE KOMIRKA', nameOne, nameSecond);
-
-    if(nameOne && nameSecond) {
-        return false;
-    } 
-    /*
-      if (token) {
-    
-          try {
+        try {
             const response = await fetch(`${process.env.DB_SERVER}/datastor`, {
-              method: 'POST', // Вказуємо метод
-              headers: {
-                'Content-Type': 'application/json', // Обов'язково для JSON
-                // 'Authorization': 'Bearer ТУТ_ТВІЙ_ТОКЕН' // Якщо потрібна авторизація
-              },
-              body: JSON.stringify({
-                data,
-                token,
-              }) // Перетворюємо об'єкт у рядок JSON
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json', // Обов'язково для JSON
+                    // 'Authorization': 'Bearer ТУТ_ТВІЙ_ТОКЕН' // Якщо потрібна авторизація
+                },
+                body: JSON.stringify({
+                    data,
+                    token,
+                })
             });
-    
+
             // Перевіряємо, чи успішний статус відповіді (200-299)
             if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-    
-            const result = await response.json(); // Отримуємо відповідь від бекенду
+
+            const result = await response.json(); 
             console.log('Успіх:', result);
             return result;
-    
-          } catch (error) {
+
+        } catch (error) {
             console.error('Помилка запиту:', error);
-          }
-        }*/
+        }
+    }
 }
