@@ -4,7 +4,7 @@ import "dotenv/config"
 
 
 
-export async function actionCreate(data) {
+export async function actionSeve(data) {
 
     const cookieStore = await cookies();
     const token = cookieStore.get('auth_token')?.value;
@@ -12,11 +12,10 @@ export async function actionCreate(data) {
     if (token) {
 
         try {
-            const response = await fetch(`${process.env.DB_SERVER}/datastor`, {
+            const response = await fetch(`${process.env.DB_SERVER}/dataseve`, {
                 method: 'POST', 
                 headers: {
-                    'Content-Type': 'application/json', // Обов'язково для JSON
-                    // 'Authorization': 'Bearer ТУТ_ТВІЙ_ТОКЕН' // Якщо потрібна авторизація
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     data,

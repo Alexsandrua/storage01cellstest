@@ -1,10 +1,9 @@
 'use client';
 
 import { Fragment, useState } from "react";
-//import  React { useState, Fragment} from 'react';
 import { DialogTitle, Button, Dialog, DialogActions, DialogContent, TextareaAutosize } from "@mui/material"
+import { actionSeve } from "../services/saveleter";
 
-// Ваш компонент текстового поля (трохи адаптований за стилями)
 function LeterPopup({ ...props }) {
     return (
         <TextareaAutosize
@@ -25,15 +24,15 @@ function LeterPopup({ ...props }) {
     );
 }
 
-// Головний компонент з Popup вікном
+
 export default function PopupWithTextarea({ open, onClose }) {
 
     const [form, setForm] = useState({ leter: '' });
 
-    // Функції для відкриття та закриття
-    const saveKomirka = () => {
+
+    const saveKomirka = async () => {
+        await actionSeve(form);
         onClose();
-        console.log('FROM ', form)
     };
 
     const handleClose = () => {
