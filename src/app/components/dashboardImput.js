@@ -6,6 +6,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { actionWrite } from "../services/actions"
 import { search } from "../services/search";
 import { actionCreate } from '../services/create';
+import { openLater } from '../services/openleter';
 import PopupWithTextarea from './popupdialog'
 
 export default function DashboardImput() {
@@ -25,6 +26,9 @@ export default function DashboardImput() {
     const [error, setError] = useState('');
 
     const [isPopupOpen, setIsPopupOpen] = React.useState(false);
+
+    const [openLaterText, setOpenLaterText] = useState("");
+    const [isReadOnly, setIsReadOnly] = useState(true);
 
     async function handleNameOne(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -73,6 +77,15 @@ console.log(' RES 0 ', res.answer)
         await actionCreate(form);
     };
 
+    const handleOpen = async (e) => {
+        setIsPopupOpen(true);
+        e.preventDefault();
+        const result = await openLater(form);
+        setIsReadOnly(true)
+        setOpenLaterText(result.leter);
+        console.log(result.leter);
+    }
+
     const handleClose = () => setIsPopupOpen(false);
 
     return (
@@ -95,7 +108,7 @@ console.log(' RES 0 ', res.answer)
                     name="oneName"
                     value={form.oneName}
                     error={isNameOneExists}
-                    helperText={isNameOneExists ? "Цей іʼмя вже існує" : ""}
+                    helperText={isNameOneExists ? "Це іʼмя вже існує" : ""}
                 />
                 <TextField
                     id="outlined-required"
@@ -104,7 +117,7 @@ console.log(' RES 0 ', res.answer)
                     name="secondName"
                     value={form.secondName}
                     error={isNameSecondExists}
-                    helperText={isNameSecondExists ? "Цей іʼмя вже існує" : ""}
+                    helperText={isNameSecondExists ? "Це іʼмя вже існує" : ""}
                 />
             </div>
             <div>
@@ -139,7 +152,7 @@ console.log(' RES 0 ', res.answer)
             <Stack
                 direction="row"
                 spacing={6}
-                size="Large"
+                size="large"
                 sx={{
                     ml: '5px',
                     mt: 3,
@@ -158,14 +171,18 @@ console.log(' RES 0 ', res.answer)
                 <Button
                     loadingPosition="start"
                     color="success"
-                    type="submit"
                     variant="contained"
                     disabled={open}
+                    onClick={handleOpen}
                 >
                     Відкрити
                 </Button>
             </Stack>
-            < PopupWithTextarea open={isPopupOpen} onClose={handleClose} />
+            < PopupWithTextarea 
+            open={isPopupOpen} 
+            onClose={handleClose} 
+            text={openLaterText}
+            isReadOnly={isReadOnly} />
         </Box >
 
     );

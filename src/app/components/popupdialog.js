@@ -25,7 +25,7 @@ function LeterPopup({ ...props }) {
 }
 
 
-export default function PopupWithTextarea({ open, onClose }) {
+export default function PopupWithTextarea({ open, onClose, text, isReadOnly }) {
 
     const [form, setForm] = useState({ leter: '' });
 
@@ -57,8 +57,9 @@ export default function PopupWithTextarea({ open, onClose }) {
                     {/* Вставляємо ваш компонент сюди */}
                     <LeterPopup
                         name="leter"
-                        value={form.leter}
+                        value={form.leter || text}
                         onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })}
+                        readOnly={isReadOnly}
                     />
                 </DialogContent>
 
