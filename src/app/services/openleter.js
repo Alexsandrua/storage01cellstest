@@ -5,7 +5,7 @@ import "dotenv/config"
 async function reqWrite(name, type) {
     try {
         const params = new URLSearchParams({ name: name, type: type }).toString();
-        const response = await fetch(`${process.env.DB_SERVER}/leter?${params}`, {
+        const response = await fetch(`${process.env.DB_SERVER}/getleter?${params}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json', // Обов'язково для JSON

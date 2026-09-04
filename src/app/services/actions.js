@@ -33,25 +33,16 @@ export async function actionWrite(data) {
     return { answer: '', lengthLine: false };
   }
 
-  let name = data.match
+  const name = data.match
     .toLowerCase()
     .trim();
 
-
-  if (!data.form.secondName && data.typName == 'oneName' || data.typName == 'secondName') {
-    name = data.typName == 'secondName' ? `_${name}` : name;
-    let res = await reqWrite(name);
-
-    return { answer: res.result, lengthLine: true, open: !res.isExists, create: res.isExists };
-  }
-
-  if (data.form.secondName && data.form.oneName) {
-    const nameMatch = data.typName == 'secondName' ? `_${name}` : `_${data.form.secondName}`;
-    const match = await reqWrite(nameMatch);
-    name = data.typName == 'secondName' ? `${data.form.oneName}_${name}` : `${data.form.secondName}_${name}`;
+  if (data.typName == 'oneName') {
     const res = await reqWrite(name);
-
-    return { answer: res.result, lengthLine: true, open: !res.isExists, create: match.isExists };
+    return { answer: res.result, lengthLine: true, open: !res.isExists, create: res.isExists };
+  } else if (data.typName == 'secondName') {
+    const nameMatch = `_${name}`;
+    const ress = await reqWrite(nameMatch);
+    return { answer: ress.result, lengthLine: true, open: !ress.isExists, create: ress.isExists };
   }
-
 }

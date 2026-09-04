@@ -12,7 +12,7 @@ export async function actionSeve(data) {
     if (token) {
 
         try {
-            const response = await fetch(`${process.env.DB_SERVER}/dataseve`, {
+            const response = await fetch(`${process.env.DB_SERVER}/seveleter`, {
                 method: 'POST', 
                 headers: {
                     'Content-Type': 'application/json',

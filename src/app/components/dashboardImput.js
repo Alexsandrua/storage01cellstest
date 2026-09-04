@@ -37,7 +37,6 @@ export default function DashboardImput() {
             typName: e.target.name,
             form,
         });
-console.log(' RES 0 ', res.answer)
         if (res.lengthLine) {
             setCreate(res.create);
             setOpen(res.open);
@@ -53,7 +52,6 @@ console.log(' RES 0 ', res.answer)
             typName: e.target.name,
             form,
         });
-        console.log(' RES 1 ', res)
         if (res.lengthLine) {
             setCreate(res.create);
             setOpen(res.open);
@@ -72,18 +70,19 @@ console.log(' RES 0 ', res.answer)
     }
 
     const handleSubmit = async (e) => {
+        setIsReadOnly(false);
         setIsPopupOpen(true);
         e.preventDefault();
+        setOpenLaterText('');
         await actionCreate(form);
     };
 
     const handleOpen = async (e) => {
+        setIsReadOnly(true);
         setIsPopupOpen(true);
         e.preventDefault();
         const result = await openLater(form);
-        setIsReadOnly(true)
-        setOpenLaterText(result.leter);
-        console.log(result.leter);
+        setOpenLaterText(result['leter']);
     }
 
     const handleClose = () => setIsPopupOpen(false);
