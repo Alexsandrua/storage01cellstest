@@ -95,7 +95,7 @@ export async function actionWrite(data) {
   // так_відкрити ні_створити
   if ((oneName && !secondName) && (isExistsOne && !isExistsSecond)) {
     console.log("З ʼʼ && І В")
-    return { lengthLine: true, isExistsOne, isExistsSecond, open: true, create: false };
+    return { lengthLine: true, isExistsOne, isExistsSecond, open: false, create: true };
   }
   // З ʼʼ && В В
   // ні_відкрити так_створити
