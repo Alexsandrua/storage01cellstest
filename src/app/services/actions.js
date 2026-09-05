@@ -2,9 +2,9 @@
 import "dotenv/config"
 
 
-async function reqWrite(name) {
+async function reqWrite(payload) {
   try {
-    const params = new URLSearchParams({ search: name }).toString();
+    const params = new URLSearchParams({ ...payload }).toString();
     const response = await fetch(`${process.env.DB_SERVER}/actionwrite?${params}`, {
       method: 'GET',
       headers: {
@@ -18,9 +18,9 @@ async function reqWrite(name) {
 
     if (response.status === 200) {
       const result = await response.json();
-      return { result, isExists: true };
+      return { ...result, isExists: true };
     } else if (response.status === 204)
-      return { result: '', isExists: false };;
+      return { oneName: null, secondName: null, isExists: false };;
   } catch (error) {
     console.error('Помилка запиту:', error);
   }
@@ -29,20 +29,90 @@ async function reqWrite(name) {
 
 export async function actionWrite(data) {
 
-  if (data.match.length < 3) {
-    return { answer: '', lengthLine: false };
+  const payload = { oneName: '', secondName: '' };
+
+  if (data.typName === 'oneName') {
+    payload.oneName = data.name.length > 2 ? data.name.toLowerCase().trim() : '';
+    payload.secondName = data.form.secondName.length > 2 ? `_${data.form.secondName.toLowerCase().trim()}` : '';
+  } else if (data.typName === 'secondName') {
+    payload.secondName = data.name.length > 2 ? `_${data.name.toLowerCase().trim()}` : '';
+    payload.oneName = data.form.oneName.length > 2 ? data.form.oneName.toLowerCase().trim() : '';
   }
 
-  const name = data.match
-    .toLowerCase()
-    .trim();
+  if (!payload.secondName && !payload.oneName) {
+    return { lengthLine: true, isExistsOne:false, isExistsSecond:false, open: true, create: true };
+  }
 
-  if (data.typName == 'oneName') {
-    const res = await reqWrite(name);
-    return { answer: res.result, lengthLine: true, open: !res.isExists, create: res.isExists };
-  } else if (data.typName == 'secondName') {
-    const nameMatch = `_${name}`;
-    const ress = await reqWrite(nameMatch);
-    return { answer: ress.result, lengthLine: true, open: !ress.isExists, create: ress.isExists };
+  const result = await reqWrite(payload);
+
+  // перевіряє запис якщо він існує то повертає TRUE
+  const oneName = payload.oneName ? true : false;
+  const secondName = payload.secondName ? true : false;
+
+  // перевіряє чи є запис в базі, якщо є то повертає TRUE
+  const isExistsOne = result.oneName ? true : false;
+  const isExistsSecond = result.secondName ? true : false;
+
+  let open = false;
+  let create = false;
+
+  // Логіка перевірки 001
+  // З — запис є
+  // І — запис в БД є
+  // В — запис в БД відсутній
+
+  // З З && І І
+  // так_відкрити ні_створити // відкриває другий
+  if ((oneName && secondName) && (isExistsOne && isExistsSecond)) {
+    console.log('З З && І І')
+    return { lengthLine: true, isExistsOne, isExistsSecond, open: false, create: true };
+  }
+  // З З && В В
+  // ні_відкрити так_створити
+  if ((oneName && secondName) && (!isExistsOne && !isExistsSecond)) {
+    console.log('З З && В В')
+    return { lengthLine: true, isExistsOne, isExistsSecond, open: true, create: false };
+  }
+  // З З && І В
+  // ні_відкрити так_створити
+  if ((oneName && secondName) && (isExistsOne && !isExistsSecond)) {
+    console.log('З З && І В')
+    return { lengthLine: true, isExistsOne, isExistsSecond, open: true, create: false };
+  }
+  // З З && В I
+  // так_відкрити ні_створити
+  if ((oneName && secondName) && (!isExistsOne && isExistsSecond)) {
+    console.log('З З && В I')
+    return { lengthLine: true, isExistsOne, isExistsSecond, open: true, create: false };
+  }
+  // ʼʼ ʼʼ && В В
+  // ні_відкрити ні_створити
+  if ((!oneName && !secondName) && (!isExistsOne && !isExistsSecond)) {
+    console.log("ʼʼ ʼʼ && В В")
+    return { lengthLine: true, isExistsOne, isExistsSecond, open: false, create: false };
+  }
+  // З ʼʼ && І В
+  // так_відкрити ні_створити
+  if ((oneName && !secondName) && (isExistsOne && !isExistsSecond)) {
+    console.log("З ʼʼ && І В")
+    return { lengthLine: true, isExistsOne, isExistsSecond, open: true, create: false };
+  }
+  // З ʼʼ && В В
+  // ні_відкрити так_створити
+  if ((oneName && !secondName) && (!isExistsOne && !isExistsSecond)) {
+    console.log("З ʼʼ && В В")
+    return { lengthLine: true, isExistsOne, isExistsSecond, open: true, create: false };
+  }
+  // ʼʼ З && В В
+  // ні_відкрити ні_створити
+  if ((!oneName && secondName) && (!isExistsOne && !isExistsSecond)) {
+    console.log("ʼʼ З && В В")
+    return { lengthLine: true, isExistsOne, isExistsSecond, open: true, create: true };
+  }
+  // ʼʼ З && В I
+  // так_відкрити ні_створити
+  if ((!oneName && secondName) && (!isExistsOne && isExistsSecond)) {
+    console.log("ʼʼ З && В І")
+    return { lengthLine: true, isExistsOne, isExistsSecond, open: false, create: true };
   }
 }

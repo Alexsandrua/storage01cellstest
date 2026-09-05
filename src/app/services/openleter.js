@@ -41,5 +41,5 @@ export async function openLater(data) {
     if (data.password) type = 3;
 
     const res = await reqWrite(name, type);
-    return res.result[name];
+    return  res.result[name];
 }

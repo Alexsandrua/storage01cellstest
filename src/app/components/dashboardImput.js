@@ -30,32 +30,20 @@ export default function DashboardImput() {
     const [openLaterText, setOpenLaterText] = useState("");
     const [isReadOnly, setIsReadOnly] = useState(true);
 
-    async function handleNameOne(e) {
+    async function handleNameFild(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
-        const res = await actionWrite({
-            match: e.target.value,
+        const result = await actionWrite({
+            name: e.target.value,
             typName: e.target.name,
             form,
         });
-        if (res.lengthLine) {
-            setCreate(res.create);
-            setOpen(res.open);
-            setIsNameOneExists(!res.open);
-        }
-
-    }
-
-    async function handNameSecond(e) {
-        setForm({ ...form, [e.target.name]: e.target.value });
-        const res = await actionWrite({
-            match: e.target.value,
-            typName: e.target.name,
-            form,
-        });
-        if (res.lengthLine) {
-            setCreate(res.create);
-            setOpen(res.open);
-            setIsNameSecondExists(!res.open);
+        console.log(result)
+        //{ lengthLine: true, isExistsOne, isExistsSecond, open: false, create: false };
+        if (result.lengthLine) {
+            setCreate(result.create);
+            setOpen(result.open);
+            setIsNameOneExists(result.isExistsOne);
+            setIsNameSecondExists(result.isExistsSecond);
         }
 
     }
@@ -99,24 +87,23 @@ export default function DashboardImput() {
         >
             <div>
                 <TextField
-
                     required
                     id="outlined-required"
                     label="Ім'я комірки"
-                    onChange={handleNameOne}
                     name="oneName"
                     value={form.oneName}
                     error={isNameOneExists}
                     helperText={isNameOneExists ? "Це іʼмя вже існує" : ""}
+                    onChange={handleNameFild}
                 />
                 <TextField
                     id="outlined-required"
                     label="Друге ім'я комірки"
-                    onChange={handNameSecond}
                     name="secondName"
                     value={form.secondName}
                     error={isNameSecondExists}
                     helperText={isNameSecondExists ? "Це іʼмя вже існує" : ""}
+                    onChange={handleNameFild}
                 />
             </div>
             <div>
