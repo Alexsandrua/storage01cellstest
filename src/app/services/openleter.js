@@ -15,12 +15,12 @@ async function reqWrite(name, type) {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
+        console.log(response.status)
         if (response.status === 200) {
             const result = await response.json();
-            return { result, isExists: true };
+            return { ...result, isExists: true };
         } else if (response.status === 204)
-            return { result: '', isExists: false };;
+            return { isExists: false };
     } catch (error) {
         console.error('Помилка запиту:', error);
     }
@@ -29,9 +29,7 @@ async function reqWrite(name, type) {
 
 export async function openLater(data) {
 
-    //oneName: "name"
-    //password: "asdffdfdfdfdf"
-    //secondName: "name"
+
     let name = data.secondName ? `_${data.secondName}` : data.oneName;
     name = name
         .toLowerCase()
@@ -40,6 +38,8 @@ export async function openLater(data) {
     let type = data.secondName ? 1 : 2;
     if (data.password) type = 3;
 
-    const res = await reqWrite(name, type);
-    return  res.result[name];
+    const result = await reqWrite(name, type);
+    if (result[name])
+        return result[name];
+    else return '';
 }

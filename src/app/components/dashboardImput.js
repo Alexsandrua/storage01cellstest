@@ -37,8 +37,7 @@ export default function DashboardImput() {
             typName: e.target.name,
             form,
         });
-        console.log(result)
-        //{ lengthLine: true, isExistsOne, isExistsSecond, open: false, create: false };
+
         if (result.lengthLine) {
             setCreate(result.create);
             setOpen(result.open);
@@ -70,7 +69,7 @@ export default function DashboardImput() {
         setIsPopupOpen(true);
         e.preventDefault();
         const result = await openLater(form);
-        setOpenLaterText(result['leter']);
+        setOpenLaterText(result && result['leter']);
     }
 
     const handleClose = () => setIsPopupOpen(false);
@@ -164,11 +163,13 @@ export default function DashboardImput() {
                     Відкрити
                 </Button>
             </Stack>
-            < PopupWithTextarea 
-            open={isPopupOpen} 
-            onClose={handleClose} 
-            text={openLaterText}
-            isReadOnly={isReadOnly} />
+            < PopupWithTextarea
+                open={isPopupOpen}
+                onClose={handleClose}
+                text={openLaterText}
+                isReadOnly={isReadOnly}
+                setCreate={setCreate}
+                setOpen={setOpen} />
         </Box >
 
     );

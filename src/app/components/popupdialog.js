@@ -25,18 +25,21 @@ function LeterPopup({ ...props }) {
 }
 
 
-export default function PopupWithTextarea({ open, onClose, text, isReadOnly }) {
+export default function PopupWithTextarea({ open, onClose, text, isReadOnly, setCreate, setOpen }) {
 
     const [form, setForm] = useState({ leter: '' });
 
 
     const saveKomirka = async () => {
         await actionSeve(form);
+        setCreate(true);
+        setOpen(false);
         onClose();
+        setForm({ ...form, 'leter': '' });
     };
 
     const handleClose = () => {
-        return onClose()
+        return onClose();
     };
 
     return (
