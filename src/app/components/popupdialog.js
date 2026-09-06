@@ -39,7 +39,8 @@ export default function PopupWithTextarea({ open, onClose, text, isReadOnly, set
     };
 
     const handleClose = () => {
-        return onClose();
+        onClose();
+        setForm({ ...form, 'leter': '' });
     };
 
     return (
