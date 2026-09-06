@@ -29,17 +29,18 @@ async function reqWrite(name, type) {
 
 export async function openLater(data) {
 
-
     let name = data.secondName ? `_${data.secondName}` : data.oneName;
     name = name
         .toLowerCase()
         .trim();
+
+    const edit = data.secondName && data.oneName ? `${data.oneName.toLowerCase().trim()}_${data.secondName.toLowerCase().trim()}` : '';
 
     let type = data.secondName ? 1 : 2;
     if (data.password) type = 3;
 
     const result = await reqWrite(name, type);
     if (result[name])
-        return result[name];
+        return { ...result[name], wr: result[edit] };
     else return '';
 }

@@ -29,6 +29,7 @@ export default function DashboardImput() {
 
     const [openLaterText, setOpenLaterText] = useState("");
     const [isReadOnly, setIsReadOnly] = useState(true);
+    const [seve, setSeve] = useState(true);
 
     async function handleNameFild(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -65,10 +66,12 @@ export default function DashboardImput() {
     };
 
     const handleOpen = async (e) => {
-        setIsReadOnly(true);
+        const result = await openLater(form);
+        setIsReadOnly(result.wr ? false : true);
+        setSeve(result.wr ? false : true)
         setIsPopupOpen(true);
         e.preventDefault();
-        const result = await openLater(form);
+
         setOpenLaterText(result && result['leter']);
     }
 
@@ -169,7 +172,8 @@ export default function DashboardImput() {
                 text={openLaterText}
                 isReadOnly={isReadOnly}
                 setCreate={setCreate}
-                setOpen={setOpen} />
+                setOpen={setOpen} 
+                setSeve={seve}/>
         </Box >
 
     );

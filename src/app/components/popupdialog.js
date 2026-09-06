@@ -25,9 +25,11 @@ function LeterPopup({ ...props }) {
 }
 
 
-export default function PopupWithTextarea({ open, onClose, text, isReadOnly, setCreate, setOpen }) {
+export default function PopupWithTextarea({ open, onClose, text, isReadOnly, setCreate, setOpen, setSeve }) {
 
     const [form, setForm] = useState({ leter: '' });
+
+   // const [seve, setSeve] = useState(true);
 
 
     const saveKomirka = async () => {
@@ -71,7 +73,11 @@ export default function PopupWithTextarea({ open, onClose, text, isReadOnly, set
                     <Button onClick={handleClose} color="secondary">
                         Скасувати
                     </Button>
-                    <Button onClick={saveKomirka} variant="contained" color="primary">
+                    <Button 
+                    onClick={saveKomirka} 
+                    variant="contained" 
+                    color="primary"
+                    disabled={setSeve}>
                         Зберегти
                     </Button>
                 </DialogActions>
