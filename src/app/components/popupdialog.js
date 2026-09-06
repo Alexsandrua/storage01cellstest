@@ -47,7 +47,7 @@ export default function PopupWithTextarea({ open, onClose, text, isReadOnly, set
         <Fragment>
             <Dialog
                 open={open}
-                onClose={onClose}
+                onClose={() => {setForm({ ...form, 'leter': '' }); return onClose();}}
                 component="form"
                 fullWidth={true}      // Дозволяє вікну адаптуватися під розмір
                 maxWidth="sm"         // Встановлює максимальну ширину (small)
