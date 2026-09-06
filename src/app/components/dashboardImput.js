@@ -62,6 +62,7 @@ export default function DashboardImput() {
         setIsPopupOpen(true);
         e.preventDefault();
         setOpenLaterText('');
+        setSeve(false)
         await actionCreate(form);
     };
 

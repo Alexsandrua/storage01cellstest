@@ -33,13 +33,14 @@ export async function openLater(data) {
     name = name
         .toLowerCase()
         .trim();
-
+    
     const edit = data.secondName && data.oneName ? `${data.oneName.toLowerCase().trim()}_${data.secondName.toLowerCase().trim()}` : '';
 
     let type = data.secondName ? 1 : 2;
     if (data.password) type = 3;
 
     const result = await reqWrite(name, type);
+    name = data.password?`${name}${data.password}`: name;
     if (result[name])
         return { ...result[name], wr: result[edit] };
     else return '';
