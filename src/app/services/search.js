@@ -1,6 +1,7 @@
 "use server"
 
 export async function search(data) {
+  console.log(' DATA ', data)
   if (data.search.length < 3) return null
   let name = data.search
     .toLowerCase()
@@ -23,7 +24,7 @@ export async function search(data) {
     if (response.status === 200) {
       result = await response.json();
     } else if (response.status === 204) result = null;
-
+ console.log('RESULT   - ', result)
     return result;
 
   } catch (error) {
