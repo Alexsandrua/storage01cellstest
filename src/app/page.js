@@ -1,6 +1,7 @@
 'use client';
 import Image from "next/image";
 import { useEffect } from "react";
+import Typography from '@mui/material/Typography'
 import DashboardImput from "./components/dashboardImput";
 
 export default function Home() {
@@ -32,21 +33,13 @@ export default function Home() {
             priority
           />
           <DashboardImput />
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Віртуальна комірка з повідомленням може зберігатию без пароля {" "}
-            <a
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Три дні,
-            </a>{" "}
-            з паролем {" "}
-            <a
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Три місяця
-            </a>{" "}
-            потім воно буде автоматично виделено.
-          </p>
+          <Typography component="span" variant="body2">
+           <Typography> Правила:</Typography>
+            Комірка створена з першим ім’ям  буде  тільки для читання.
+            <Typography>Комірка створена з двох імен, може бути редагована і мати пароль.
+            Для редагування треба вводити два імʼя . Для  читання треба ввести тільки друге імʼя і натиснути відкрити. Якщо вона з паролем треба ввести і пароль.
+            Комірки зберігаються 3 години.</Typography>
+          </Typography>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
         </div>

@@ -70,49 +70,41 @@ export async function actionWrite(data) {
   // З З && В В
   // ні_відкрити так_створити
   if ((oneName && secondName) && (!isExistsOne && !isExistsSecond)) {
-    console.log('З З && В В')
     return { lengthLine: true, isExistsOne, isExistsSecond, open: true, create: false };
   }
   // З З && І В
   // ні_відкрити так_створити
   if ((oneName && secondName) && (isExistsOne && !isExistsSecond)) {
-    console.log('З З && І В')
     return { lengthLine: true, isExistsOne, isExistsSecond, open: true, create: false };
   }
   // З З && В I
   // так_відкрити ні_створити
   if ((oneName && secondName) && (!isExistsOne && isExistsSecond)) {
-    console.log('З З && В I')
     return { lengthLine: true, isExistsOne, isExistsSecond, open: true, create: false };
   }
   // ʼʼ ʼʼ && В В
   // ні_відкрити ні_створити
   if ((!oneName && !secondName) && (!isExistsOne && !isExistsSecond)) {
-    console.log("ʼʼ ʼʼ && В В")
     return { lengthLine: true, isExistsOne, isExistsSecond, open: false, create: false };
   }
   // З ʼʼ && І В
   // так_відкрити ні_створити
   if ((oneName && !secondName) && (isExistsOne && !isExistsSecond)) {
-    console.log("З ʼʼ && І В")
     return { lengthLine: true, isExistsOne, isExistsSecond, open: false, create: true };
   }
   // З ʼʼ && В В
   // ні_відкрити так_створити
   if ((oneName && !secondName) && (!isExistsOne && !isExistsSecond)) {
-    console.log("З ʼʼ && В В")
     return { lengthLine: true, isExistsOne, isExistsSecond, open: true, create: false };
   }
   // ʼʼ З && В В
   // ні_відкрити ні_створити
   if ((!oneName && secondName) && (!isExistsOne && !isExistsSecond)) {
-    console.log("ʼʼ З && В В")
     return { lengthLine: true, isExistsOne, isExistsSecond, open: true, create: true };
   }
   // ʼʼ З && В I
   // так_відкрити ні_створити
   if ((!oneName && secondName) && (!isExistsOne && isExistsSecond)) {
-    console.log("ʼʼ З && В І")
     return { lengthLine: true, isExistsOne, isExistsSecond, open: false, create: true };
   }
 }

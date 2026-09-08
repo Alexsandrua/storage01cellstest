@@ -7,7 +7,8 @@ import { actionWrite } from "../services/actions"
 import { search } from "../services/search";
 import { actionCreate } from '../services/create';
 import { openLater } from '../services/openleter';
-import PopupWithTextarea from './popupdialog'
+import PopupWithTextarea from './popupdialog';
+import SearchLetter from './searchletter';
 
 export default function DashboardImput() {
 
@@ -31,6 +32,8 @@ export default function DashboardImput() {
     const [isReadOnly, setIsReadOnly] = useState(true);
     const [seve, setSeve] = useState(true);
 
+    const [searchNames, setSearchNames] = useState('');
+
     async function handleNameFild(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
         const result = await actionWrite({
@@ -50,11 +53,12 @@ export default function DashboardImput() {
 
     async function handlePName(e) {
         setPassword(e.target.value);
-        setForm({ ...form, [e.target.name]: e.target.value });
+        setForm({ ...form, [e.target.name]: e.taSrget.value });
     }
 
     async function handleSearch(e) {
-        await search({ search: e.target.value });
+        const result = await search({ search: e.target.value });
+        setSearchNames({ value: result.names, search: result.search });
     }
 
     const handleSubmit = async (e) => {
@@ -138,43 +142,63 @@ export default function DashboardImput() {
                     onChange={handleSearch}
                 />
             </div>
-            <Stack
-                direction="row"
-                spacing={6}
-                size="large"
+            <Box
                 sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between', // Розштовхує кнопки ліворуч, а список праворуч
+                    alignItems: 'flex-start',            // Вирівнює кнопки та список по вертикалі
                     ml: '5px',
                     mt: 3,
-                    width: '100%'
+                    width: '100%'                    // Обов'язково для роботи space-between
                 }}
             >
-                <Button
-                    loadingPosition="start"
-                    color="success"
-                    type="submit"
-                    variant="contained"
-                    disabled={create}
+                <Stack
+                    direction="row"
+                    spacing={6}
+                    size="large"
+                    sx={{
+                        ml: '5px',
+                        mt: 3,
+                        width: '100%'
+                    }}
                 >
-                    Створити
-                </Button>
-                <Button
-                    loadingPosition="start"
-                    color="success"
-                    variant="contained"
-                    disabled={open}
-                    onClick={handleOpen}
-                >
-                    Відкрити
-                </Button>
-            </Stack>
+                    <Button
+                        loadingPosition="start"
+                        color="success"
+                        type="submit"
+                        variant="contained"
+                        disabled={create}
+                    >
+                        Створити
+                    </Button>
+                    <Button
+                        loadingPosition="start"
+                        color="success"
+                        variant="contained"
+                        disabled={open}
+                        onClick={handleOpen}
+                    >
+                        Відкрити
+                    </Button>
+                </Stack>
+                <Stack sx={{ maxWidth: 360, width: '100%' }}>
+                    <SearchLetter
+                        names={searchNames}
+                        setIsReadOnly={setIsReadOnly}
+                        setIsPopupOpen={setIsPopupOpen}
+                        setOpenLaterText={setOpenLaterText}
+                    />
+                </Stack>
+            </Box>
             < PopupWithTextarea
                 open={isPopupOpen}
                 onClose={handleClose}
                 text={openLaterText}
                 isReadOnly={isReadOnly}
                 setCreate={setCreate}
-                setOpen={setOpen} 
-                setSeve={seve}/>
+                setOpen={setOpen}
+                setSeve={seve} />
         </Box >
 
     );

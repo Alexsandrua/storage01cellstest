@@ -1,8 +1,8 @@
 "use server"
 
 export async function search(data) {
-  console.log(' DATA ', data)
-  if (data.search.length < 3) return null
+
+  if (data.search.length < 3) return {}
   let name = data.search
     .toLowerCase()
     .trim();
@@ -20,11 +20,12 @@ export async function search(data) {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    let result = ''
+    let result = [];
     if (response.status === 200) {
       result = await response.json();
-    } else if (response.status === 204) result = null;
- console.log('RESULT   - ', result)
+      result['search'] = data.search;
+    } else if (response.status === 204) result = [];
+ console.log(' Name ', result.names)
     return result;
 
   } catch (error) {
