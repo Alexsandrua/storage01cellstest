@@ -145,12 +145,15 @@ export default function DashboardImput() {
             <Box
                 sx={{
                     display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between', // Розштовхує кнопки ліворуч, а список праворуч
-                    alignItems: 'flex-start',            // Вирівнює кнопки та список по вертикалі
+                    // Мобільні: column (кнопки зверху, SearchLetter знизу). ПК: row (в один рядок)
+                    flexDirection: { xs: 'column', md: 'row' },
+                    // Мобільні: кнопки розтягнуться на всю ширину. ПК: розштовхуються в боки
+                    justifyContent: { xs: 'flex-start', md: 'space-between' },
+                    alignItems: 'flex-start',
                     ml: '5px',
                     mt: 3,
-                    width: '100%'                    // Обов'язково для роботи space-between
+                    width: '100%',
+                    gap: { xs: 3, md: 0 } // Додає відступ між кнопками та SearchLetter на мобільних
                 }}
             >
                 <Stack
@@ -159,7 +162,7 @@ export default function DashboardImput() {
                     size="large"
                     sx={{
                         ml: '5px',
-                        mt: 3,
+                        mt: { xs: 0, md: 3 },
                         width: '100%'
                     }}
                 >
