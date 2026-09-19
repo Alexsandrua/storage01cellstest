@@ -2,3 +2,4 @@
 CONNECT_MONGO_DB='mongodb+srv://<username>:<password>@<clustername>.mongodb.net/'
 JWT_SECRET="101100100101"
 REDIS_URL='redis[s]://[[username][:password]@][host][:port][/db-number]'
+DB_SERVER='http://localhost:3012'
