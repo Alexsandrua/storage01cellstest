@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import Typography from '@mui/material/Typography'
 import DashboardImput from "./components/dashboardImput";
+import RulesKomirka from "./components/help";
 
 export default function Home() {
   useEffect(() => {
@@ -33,13 +34,7 @@ export default function Home() {
             priority
           />
           <DashboardImput />
-          <Typography component="span" variant="body2">
-           <Typography> Правила:</Typography>
-            Комірка створена з першим ім’ям  буде  тільки для читання.
-            <Typography>Комірка створена з двох імен, може бути редагована і мати пароль.
-            Для редагування треба вводити два імʼя . Для  читання треба ввести тільки друге імʼя і натиснути відкрити. Якщо вона з паролем треба ввести і пароль.
-            Комірки зберігаються 3 години.</Typography>
-          </Typography>
+          <RulesKomirka />
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
         </div>
