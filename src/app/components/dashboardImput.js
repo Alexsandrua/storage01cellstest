@@ -53,7 +53,7 @@ export default function DashboardImput() {
 
     async function handlePName(e) {
         setPassword(e.target.value);
-        setForm({ ...form, [e.target.name]: e.taSrget.value });
+        setForm({ ...form, [e.target.name]: e.target.value });
     }
 
     async function handleSearch(e) {

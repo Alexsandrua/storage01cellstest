@@ -5,7 +5,7 @@ import "dotenv/config"
 
 
 export async function actionCreate(data) {
-
+console.log('CRETE')
     data.oneName = data.oneName
         .toLowerCase()
         .trim();
@@ -16,15 +16,13 @@ export async function actionCreate(data) {
         
     const cookieStore = await cookies();
     const token = cookieStore.get('auth_token')?.value;
-
     if (token) {
 
         try {
             const response = await fetch(`${process.env.DB_SERVER}/create`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Обов'язково для JSON
-                    // 'Authorization': 'Bearer ТУТ_ТВІЙ_ТОКЕН' // Якщо потрібна авторизація
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     data,
@@ -35,7 +33,6 @@ export async function actionCreate(data) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const result = await response.json();
-            console.log('Успіх:', result);
             return result;
 
         } catch (error) {
